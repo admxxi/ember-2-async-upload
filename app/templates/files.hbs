@@ -1,0 +1,75 @@
+{{outlet}}
+
+<div class="col-uploads">
+    <button {{action "uploadAll"}} class="btn btn-primary">Upload All</button>
+    <button {{action "removeCompleted"}} class="btn btn-default btn-remove-completed  {{unless hasCompleted 'disabled'}}">Remove Completed</button>
+    <label class="total-size">Total file size: </label> {{humanReadableFileSize totalFileSize}}
+
+    <br><br>
+
+    {{model.length}}
+    {{#each model as |uploadFile|}}
+
+    <div class="upload-file-block">
+        <div class="image-preview">
+            {{#if uploadFile.isDisplayableImage}}
+            <img class="image-preview" src="{{uploadFile.base64Image}}" />
+            {{else}}
+            <img class="image-preview" src="img/image-unknown.gif">
+            {{/if}}
+        </div>
+
+        <div class="details-block">
+            <label>Name:</label> {{input value=uploadFile.name}} <br>
+            <label>Size:</label> {{humanReadableFileSize uploadFile.size}}<br>
+
+            {{#if uploadFile.didUpload}}
+                {{#unless uploadFile.didError}}
+                    <span class="has-success">
+                        <span class="glyphicon glyphicon-ok form-control-feedback"></span>
+                        <span class="form-control-feedback">Success</span>
+                    </span>
+                {{else}}
+                    <span class="has-error">
+                        <span class="glyphicon glyphicon-remove form-control-feedback"></span>
+                        <span class="form-control-feedback">Error</span>
+                    </span>
+                {{/unless}}
+            {{else}}
+
+                {{#if uploadFile.isReading}}
+                    Reading file...
+                {{else}}
+                    <a {{action "uploadFile" uploadFile}}>Upload</a>
+                {{/if}}
+
+            {{/if}}
+
+
+            <a {{action "removeFile" uploadFile}} class="remove-from-list">Remove from List</a>
+
+            {{#if uploadFile.showProgressBar}}
+            <div class="progress progress-striped">
+                <div class="progress-bar progress-bar-info" style="{{uploadFile.progressStyle}}"></div>
+            </div>
+            {{/if}}
+        </div>
+    </div>
+    {{else}}
+    <h4 class="msg-drop">Drop files here to upload</h4>
+    {{/each}}
+</div>
+
+<div class="col-log">
+    <div class="well">
+        <label>Upload Logs</label>
+        <ul>
+            {{#each uploadedLog as |url|}}
+            <li><a href="{{url}}" target="_blank">{{url}}</a></li>
+            {{/each}}
+        </ul>
+    </div>
+</div>
+
+
+{{drop-zone filesDropped='filesDropped' allowFileDrop='allowFileDrop'}}
