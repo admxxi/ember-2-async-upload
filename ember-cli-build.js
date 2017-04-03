@@ -7,12 +7,6 @@ module.exports = function(defaults) {
     // Add options here
     sassOptions: {
       extension: 'scss'
-    },
-    minifyJS: {
-      enabled: false
-    },
-    minifyCSS: {
-      enabled: false
     }
   });
 
