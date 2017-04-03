@@ -10,6 +10,6 @@ App = Ember.Application.extend
   podModulePrefix: config.podModulePrefix
   Resolver: Resolver
 
-loadInitializers(App, config.podModulePrefix);
+loadInitializers(App, config.modulePrefix);
 
 export default App
