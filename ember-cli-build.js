@@ -7,6 +7,9 @@ module.exports = function(defaults) {
     // Add options here
     sassOptions: {
       extension: 'scss'
+    },
+    babel: {
+      includePolyfill: true
     }
   });
 
